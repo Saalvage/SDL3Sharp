@@ -1,0 +1,3 @@
+<Project>
+  <Import Project="../Libraries/CppSharp/Directory.Build.props" />
+</Project>
