@@ -1,7 +1,7 @@
 [submodule "Libraries/SDL"]
-path = Libraries/SDL
-url = https://github.com/libsdl-org/SDL
+	path = Libraries/SDL
+	url = https://github.com/libsdl-org/SDL
 
 [submodule "Libraries/CppSharp"]
-path = Libraries/CppSharp
-url = https://github.com/mono/CppSharp
+	path = Libraries/CppSharp
+	url = https://github.com/Saalvage/CppSharp
