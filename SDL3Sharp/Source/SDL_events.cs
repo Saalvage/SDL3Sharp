@@ -156,6 +156,8 @@ namespace SDL3Sharp
         MouseWheel = 1027,
         /// <summary>Joystick axis motion</summary>
         JoystickAxisMotion = 1536,
+        /// <summary>Joystick trackball motion</summary>
+        JoystickBallMotion = 1537,
         /// <summary>Joystick hat position change</summary>
         JoystickHatMotion = 1538,
         /// <summary>Joystick button pressed</summary>
@@ -275,6 +277,7 @@ namespace SDL3Sharp
     /// <para>wants to hold onto it beyond the scope of handling this event.</para>
     /// </remarks>
     /// <summary>Mouse motion event structure (event.motion.*)</summary>
+    /// <summary>Joystick trackball motion event structure (event.jball.*)</summary>
     /// <summary>Mouse button event structure (event.button.*)</summary>
     /// <summary>Mouse wheel event structure (event.wheel.*)</summary>
     /// <summary>Joystick axis motion event structure (event.jaxis.*)</summary>
@@ -1736,6 +1739,246 @@ namespace SDL3Sharp
 
         /// <summary>The relative motion in the Y direction</summary>
         public float Yrel
+        {
+            get
+            {
+                return ((__Internal*)__Instance)->yrel;
+            }
+
+            set
+            {
+                ((__Internal*)__Instance)->yrel = value;
+            }
+        }
+    }
+
+    /// <summary>Joystick trackball motion event structure (event.jball.*)</summary>
+    public unsafe partial class JoyBallEvent : IDisposable
+    {
+        [StructLayout(LayoutKind.Sequential, Size = 32, Pack = 8)]
+        public partial struct __Internal
+        {
+            internal uint type;
+            internal ulong timestamp;
+            internal uint which;
+            internal byte ball;
+            internal byte padding1;
+            internal byte padding2;
+            internal byte padding3;
+            internal short xrel;
+            internal short yrel;
+
+            [SuppressUnmanagedCodeSecurity, DllImport("SDL3", EntryPoint = "??0SDL_JoyBallEvent@@QEAA@AEBU0@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr cctor(__IntPtr __instance, __IntPtr _0);
+        }
+
+        public __IntPtr __Instance { get; protected set; }
+
+        internal static readonly new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::SDL3Sharp.JoyBallEvent> NativeToManagedMap =
+            new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::SDL3Sharp.JoyBallEvent>();
+
+        internal static void __RecordNativeToManagedMapping(IntPtr native, global::SDL3Sharp.JoyBallEvent managed)
+        {
+            NativeToManagedMap[native] = managed;
+        }
+
+        internal static bool __TryGetNativeToManagedMapping(IntPtr native, out global::SDL3Sharp.JoyBallEvent managed)
+        {
+    
+            return NativeToManagedMap.TryGetValue(native, out managed);
+        }
+
+        protected bool __ownsNativeInstance;
+
+        internal static JoyBallEvent __CreateInstance(__IntPtr native, bool skipVTables = false)
+        {
+            if (native == __IntPtr.Zero)
+                return null;
+            return new JoyBallEvent(native.ToPointer(), skipVTables);
+        }
+
+        internal static JoyBallEvent __GetOrCreateInstance(__IntPtr native, bool saveInstance = false, bool skipVTables = false)
+        {
+            if (native == __IntPtr.Zero)
+                return null;
+            if (__TryGetNativeToManagedMapping(native, out var managed))
+                return (JoyBallEvent)managed;
+            var result = __CreateInstance(native, skipVTables);
+            if (saveInstance)
+                __RecordNativeToManagedMapping(native, result);
+            return result;
+        }
+
+        internal static JoyBallEvent __CreateInstance(__Internal native, bool skipVTables = false)
+        {
+            return new JoyBallEvent(native, skipVTables);
+        }
+
+        private static void* __CopyValue(__Internal native)
+        {
+            var ret = Marshal.AllocHGlobal(sizeof(__Internal));
+            *(__Internal*) ret = native;
+            return ret.ToPointer();
+        }
+
+        private JoyBallEvent(__Internal native, bool skipVTables = false)
+            : this(__CopyValue(native), skipVTables)
+        {
+            __ownsNativeInstance = true;
+            __RecordNativeToManagedMapping(__Instance, this);
+        }
+
+        protected JoyBallEvent(void* native, bool skipVTables = false)
+        {
+            if (native == null)
+                return;
+            __Instance = new __IntPtr(native);
+        }
+
+        public JoyBallEvent()
+        {
+            __Instance = Marshal.AllocHGlobal(sizeof(global::SDL3Sharp.JoyBallEvent.__Internal));
+            __ownsNativeInstance = true;
+            __RecordNativeToManagedMapping(__Instance, this);
+        }
+
+        public JoyBallEvent(global::SDL3Sharp.JoyBallEvent _0)
+        {
+            __Instance = Marshal.AllocHGlobal(sizeof(global::SDL3Sharp.JoyBallEvent.__Internal));
+            __ownsNativeInstance = true;
+            __RecordNativeToManagedMapping(__Instance, this);
+            *((global::SDL3Sharp.JoyBallEvent.__Internal*) __Instance) = *((global::SDL3Sharp.JoyBallEvent.__Internal*) _0.__Instance);
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true, callNativeDtor: __ownsNativeInstance);
+        }
+
+        partial void DisposePartial(bool disposing);
+
+        internal protected virtual void Dispose(bool disposing, bool callNativeDtor)
+        {
+            if (__Instance == IntPtr.Zero)
+                return;
+            NativeToManagedMap.TryRemove(__Instance, out _);
+            DisposePartial(disposing);
+            if (__ownsNativeInstance)
+                Marshal.FreeHGlobal(__Instance);
+            __Instance = IntPtr.Zero;
+        }
+
+        /// <summary>::SDL_JOYBALLMOTION</summary>
+        public uint Type
+        {
+            get
+            {
+                return ((__Internal*)__Instance)->type;
+            }
+
+            set
+            {
+                ((__Internal*)__Instance)->type = value;
+            }
+        }
+
+        /// <summary>In nanoseconds, populated using SDL_GetTicksNS()</summary>
+        public ulong Timestamp
+        {
+            get
+            {
+                return ((__Internal*)__Instance)->timestamp;
+            }
+
+            set
+            {
+                ((__Internal*)__Instance)->timestamp = value;
+            }
+        }
+
+        /// <summary>The joystick instance id</summary>
+        public uint Which
+        {
+            get
+            {
+                return ((__Internal*)__Instance)->which;
+            }
+
+            set
+            {
+                ((__Internal*)__Instance)->which = value;
+            }
+        }
+
+        /// <summary>The joystick trackball index</summary>
+        public byte Ball
+        {
+            get
+            {
+                return ((__Internal*)__Instance)->ball;
+            }
+
+            set
+            {
+                ((__Internal*)__Instance)->ball = value;
+            }
+        }
+
+        public byte Padding1
+        {
+            get
+            {
+                return ((__Internal*)__Instance)->padding1;
+            }
+
+            set
+            {
+                ((__Internal*)__Instance)->padding1 = value;
+            }
+        }
+
+        public byte Padding2
+        {
+            get
+            {
+                return ((__Internal*)__Instance)->padding2;
+            }
+
+            set
+            {
+                ((__Internal*)__Instance)->padding2 = value;
+            }
+        }
+
+        public byte Padding3
+        {
+            get
+            {
+                return ((__Internal*)__Instance)->padding3;
+            }
+
+            set
+            {
+                ((__Internal*)__Instance)->padding3 = value;
+            }
+        }
+
+        /// <summary>The relative motion in the X direction</summary>
+        public short Xrel
+        {
+            get
+            {
+                return ((__Internal*)__Instance)->xrel;
+            }
+
+            set
+            {
+                ((__Internal*)__Instance)->xrel = value;
+            }
+        }
+
+        /// <summary>The relative motion in the Y direction</summary>
+        public short Yrel
         {
             get
             {
@@ -6942,6 +7185,9 @@ namespace SDL3Sharp
             internal global::SDL3Sharp.JoyAxisEvent.__Internal jaxis;
 
             [FieldOffset(0)]
+            internal global::SDL3Sharp.JoyBallEvent.__Internal jball;
+
+            [FieldOffset(0)]
             internal global::SDL3Sharp.JoyHatEvent.__Internal jhat;
 
             [FieldOffset(0)]
@@ -7214,6 +7460,22 @@ namespace SDL3Sharp
                 if (ReferenceEquals(value, null))
                     throw new global::System.ArgumentNullException("value", "Cannot be null because it is passed by value.");
                 __instance.jaxis = *(global::SDL3Sharp.JoyAxisEvent.__Internal*) value.__Instance;
+            }
+        }
+
+        /// <summary>Joystick ball event data</summary>
+        public global::SDL3Sharp.JoyBallEvent Jball
+        {
+            get
+            {
+                return global::SDL3Sharp.JoyBallEvent.__CreateInstance(__instance.jball);
+            }
+
+            set
+            {
+                if (ReferenceEquals(value, null))
+                    throw new global::System.ArgumentNullException("value", "Cannot be null because it is passed by value.");
+                __instance.jball = *(global::SDL3Sharp.JoyBallEvent.__Internal*) value.__Instance;
             }
         }
 

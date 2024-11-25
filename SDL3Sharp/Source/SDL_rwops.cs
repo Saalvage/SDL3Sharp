@@ -1520,9 +1520,6 @@ namespace SDL3Sharp
         /// <para>later.</para>
         /// <para>SDL_RWread() is actually a function wrapper that calls the SDL_RWops's</para>
         /// <para>`read` method appropriately, to simplify application development.</para>
-        /// <para>It is an error to specify a negative `size`, but this parameter is signed</para>
-        /// <para>so you definitely cannot overflow the return value on a successful run with</para>
-        /// <para>enormous amounts of data.</para>
         /// <para>the number of bytes read, or 0 on end of file or other error.</para>
         /// <para>This function is available since SDL 3.0.0.</para>
         /// <para>SDL_RWclose</para>

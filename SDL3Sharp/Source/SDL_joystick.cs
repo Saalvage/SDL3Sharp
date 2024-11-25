@@ -655,6 +655,9 @@ namespace SDL3Sharp
             [SuppressUnmanagedCodeSecurity, DllImport("SDL3", EntryPoint = "SDL_GetNumJoystickAxes", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern int GetNumJoystickAxes(__IntPtr joystick);
 
+            [SuppressUnmanagedCodeSecurity, DllImport("SDL3", EntryPoint = "SDL_GetNumJoystickBalls", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern int GetNumJoystickBalls(__IntPtr joystick);
+
             [SuppressUnmanagedCodeSecurity, DllImport("SDL3", EntryPoint = "SDL_GetNumJoystickHats", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern int GetNumJoystickHats(__IntPtr joystick);
 
@@ -675,6 +678,9 @@ namespace SDL3Sharp
 
             [SuppressUnmanagedCodeSecurity, DllImport("SDL3", EntryPoint = "SDL_GetJoystickAxisInitialState", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern bool GetJoystickAxisInitialState(__IntPtr joystick, int axis, short* state);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("SDL3", EntryPoint = "SDL_GetJoystickBall", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern int GetJoystickBall(__IntPtr joystick, int ball, int* dx, int* dy);
 
             [SuppressUnmanagedCodeSecurity, DllImport("SDL3", EntryPoint = "SDL_GetJoystickHat", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern byte GetJoystickHat(__IntPtr joystick, int hat);
@@ -1361,6 +1367,24 @@ namespace SDL3Sharp
             return ___ret;
         }
 
+        /// <summary>Get the number of trackballs on a joystick.</summary>
+        /// <param name="joystick">an SDL_Joystick structure containing joystick information</param>
+        /// <remarks>
+        /// <para>Joystick trackballs have only relative motion events associated with them</para>
+        /// <para>and their state cannot be polled.</para>
+        /// <para>Most joysticks do not have trackballs.</para>
+        /// <para>the number of trackballs on success or a negative error code on</para>
+        /// <para>failure; call SDL_GetError() for more information.</para>
+        /// <para>This function is available since SDL 3.0.0.</para>
+        /// <para>SDL_GetJoystickBall</para>
+        /// </remarks>
+        public static int GetNumJoystickBalls(global::SDL3Sharp.Joystick joystick)
+        {
+            var __arg0 = joystick is null ? __IntPtr.Zero : joystick.__Instance;
+            var ___ret = __Internal.GetNumJoystickBalls(__arg0);
+            return ___ret;
+        }
+
         /// <summary>Get the number of POV hats on a joystick.</summary>
         /// <param name="joystick">an SDL_Joystick structure containing joystick information</param>
         /// <remarks>
@@ -1476,6 +1500,35 @@ namespace SDL3Sharp
                 var __arg2 = __state2;
                 var ___ret = __Internal.GetJoystickAxisInitialState(__arg0, axis, __arg2);
                 return ___ret;
+            }
+        }
+
+        /// <summary>Get the ball axis change since the last poll.</summary>
+        /// <param name="joystick">the SDL_Joystick to query</param>
+        /// <param name="ball">the ball index to query; ball indices start at index 0</param>
+        /// <param name="dx">stores the difference in the x axis position since the last poll</param>
+        /// <param name="dy">stores the difference in the y axis position since the last poll</param>
+        /// <remarks>
+        /// <para>Trackballs can only return relative motion since the last call to</para>
+        /// <para>SDL_GetJoystickBall(), these motion deltas are placed into `dx` and `dy`.</para>
+        /// <para>Most joysticks do not have trackballs.</para>
+        /// <para>0 on success or a negative error code on failure; call</para>
+        /// <para>SDL_GetError() for more information.</para>
+        /// <para>This function is available since SDL 3.0.0.</para>
+        /// <para>SDL_GetNumJoystickBalls</para>
+        /// </remarks>
+        public static int GetJoystickBall(global::SDL3Sharp.Joystick joystick, int ball, ref int dx, ref int dy)
+        {
+            var __arg0 = joystick is null ? __IntPtr.Zero : joystick.__Instance;
+            fixed (int* __dx2 = &dx)
+            {
+                var __arg2 = __dx2;
+                fixed (int* __dy3 = &dy)
+                {
+                    var __arg3 = __dy3;
+                    var ___ret = __Internal.GetJoystickBall(__arg0, ball, __arg2, __arg3);
+                    return ___ret;
+                }
             }
         }
 

@@ -592,7 +592,7 @@ namespace SDL3Sharp
         /// <param name="pixels">a pointer to existing pixel data</param>
         /// <param name="width">the width of the surface</param>
         /// <param name="height">the height of the surface</param>
-        /// <param name="pitch">the pitch of the surface in bytes</param>
+        /// <param name="pitch">the number of bytes between each row, including padding</param>
         /// <param name="format">the SDL_PixelFormatEnum for the new surface's pixel format.</param>
         /// <remarks>
         /// <para>No copy is made of the pixel data. Pixel data is not managed automatically;</para>
